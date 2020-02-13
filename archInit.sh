@@ -26,8 +26,8 @@ clear
 
 ## Calculating swap size
 ## For possibility of using hibernation, swap size needs to be at least the size of RAM
-swap_size=$(free -m | awk '/Mem:/ {print $2')
-swap_end=$(( $swap_size + 1 + 250 ))
+swap_size=$(free -m | awk '/Mem:/ {print $2}')
+swap_end=$(( $swap_size + 1 + 500 ))
 
 ## Partitioning disk
 parted --script "${device}" \
