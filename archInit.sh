@@ -92,9 +92,8 @@ echo "LAN=en_GB.UTF-8" > /mnt/etc/locale.conf
 arch-chroot /mnt useradd -mU -s /usr/bin/zsh -G wheel,docker,video,audio "$username"
 arch-chroot /mnt chsh -s /usr/bin/zsh
 
-echo "$user:$password" | chpasswd --root /mnt
-echo "root:$password" | chpasswd --root /mnt
-
+echo "$username:$pass" | chpasswd --root /mnt
+echo "root:$pass" | chpasswd --root /mnt
 
 
 
