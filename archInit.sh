@@ -30,8 +30,30 @@ swap_size=$(free -m | awk '/Mem:/ {print $2')
 swap_end=$(( $swap_size + 1 + 250 ))
 
 ## Partitioning disk
-parted --script "${device}" -- mklabel gpt \
-  mkpart EXP fat32 1Mib 250MiB \
+parted --script "${device}" \
+  mklabel gpt \
+  mkpart ESP fat32 1Mib 500MiB \
   set 1 boot on \
-  mkpart primary linux-swap 250Mib ${swap_end} \
+  mkpart primary linux-swap 500Mib ${swap_end} \
   mkpart primary ext4 ${swap_end} 100%
+
+part_esp="/dev/sda1"
+part_swap="/dev/sda2"
+part_root="/dev/sda3"
+
+mkfs.fat -F32 part_esp
+mkfs.ext4 part_root
+mkswap part_swap
+swapon part_swap
+
+# Mounting file systems
+mount part_root /mnt
+mkdir /mnt/efi
+mount part_esp /mnt/efi
+
+
+
+
+
+
+
