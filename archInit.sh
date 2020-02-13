@@ -41,15 +41,15 @@ part_esp="/dev/sda1"
 part_swap="/dev/sda2"
 part_root="/dev/sda3"
 
-mkfs.fat -F32 part_esp
-mkfs.ext4 part_root
-mkswap part_swap
-swapon part_swap
+mkfs.fat -F32 "${part_esp}"
+mkfs.ext4 "${part_root}"
+mkswap "${part_swap}"
+swapon "${part_swap}"
 
 # Mounting file systems
-mount part_root /mnt
+mount "${part_root}" /mnt
 mkdir /mnt/efi
-mount part_esp /mnt/efi
+mount "${part_esp}" /mnt/efi
 
 pacstrap /mnt base linux linux-firmware
 genfstab -t PARTUUID /mnt >> /mnt/etc/fstab
