@@ -95,7 +95,7 @@ arch-chroot /mnt chsh -s /usr/bin/zsh
 echo "$username:$pass" | chpasswd --root /mnt
 echo "root:$pass" | chpasswd --root /mnt
 
-
+#TODO - boot loader
 
 
 
