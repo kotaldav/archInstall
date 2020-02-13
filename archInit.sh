@@ -51,6 +51,54 @@ mount part_root /mnt
 mkdir /mnt/efi
 mount part_esp /mnt/efi
 
+pacstrap /mnt base linux linux-firmware
+genfstab -t PARTUUID /mnt >> /mnt/etc/fstab
+echo "${hostname}" > /mnt/etc/hostname
+
+## install other base packages
+pacstrap /mnt sudo wget unzip zip 
+
+## install shell
+pacstrap /mnt zsh zsh-config
+
+## install network tools
+pacstrap /mnt dnsutils wireless_tools openssh
+
+## install window manager
+pacstrap /mnt i3-gapsi i3blocks i3status i3lock xorg-server xorg-xinit arandr
+
+## install file manager
+pacstrap /mnt ranger
+
+## install audio control
+pacstrap /mnt pulseaudio pulseaudio-alsa pulseaudio-bluetooth pavucontrol
+
+## install video control
+pacstram /mnt 
+
+## install utilities
+pacstrap /mnt redshift chromium okular
+
+## install fonts
+pacstrap /mnt noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-monofur ttf-dejavu xorg-fonts-misc ttf-font-awesome
+
+## install docker & kubernetes tools
+pacstrap /mnt docker 
+
+## set locale
+echo "LAN=en_GB.UTF-8" > /mnt/etc/locale.conf
+
+## chroot into new system
+arch-chroot /mnt useradd -mU -s /usr/bin/zsh -G wheel,docker,video,audio "$username"
+arch-chroot /mnt chsh -s /usr/bin/zsh
+
+echo "$user:$password" | chpasswd --root /mnt
+echo "root:$password" | chpasswd --root /mnt
+
+
+
+
+
 
 
 
